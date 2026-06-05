@@ -1,0 +1,1 @@
+export 'package:uya_movies_app/domain/entities/movie.dart';
