@@ -7,7 +7,7 @@ class MovieMapper {
     backdropPath: (movieDb.backdropPath != '')
         ? 'https://image.tmdb.org/t/p/w500${movieDb.backdropPath}'
         : 'https://via.placeholder.com/500x750?text=No+Image',
-    genreIds: movieDb.genreIds,
+    genreIds: movieDb.genreIds.map((e) => e.toString()).toList(),
     id: movieDb.id,
     originalLanguage: movieDb.originalLanguage,
     originalTitle: movieDb.originalTitle,

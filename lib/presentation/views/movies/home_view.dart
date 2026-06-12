@@ -13,17 +13,15 @@ class HomeView extends ConsumerStatefulWidget {
 class _HomeViewState extends ConsumerState<HomeView> {
   @override
   void initState() {
-      super.initState();
+    super.initState();
 
-      ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+    ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
   }
 
   @override
   Widget build(BuildContext context) {
-
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
 
-    
     return SafeArea(
       child: CustomScrollView(
         slivers: [
@@ -39,8 +37,12 @@ class _HomeViewState extends ConsumerState<HomeView> {
             delegate: SliverChildBuilderDelegate((context, index) {
               return Column(
                 children: [
-                  MoviesSlideshow(movies: []),
-                  Text('data'),
+                  MoviesSlideshow(movies: nowPlayingMovies),
+                  MovieHorizontalListview(
+                    movies: nowPlayingMovies,
+                    title: 'En Cines',
+                    subtitle: 'A Partir de',
+                  )
                 ],
               );
             }, childCount: 1),
