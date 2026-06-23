@@ -3,6 +3,7 @@ import 'package:uya_movies_app/config/config.dart';
 import 'package:uya_movies_app/domain/domain.dart';
 
 import '../mappers/movie_mapper.dart';
+import '../models/moviedb/moviedb_detail.dart';
 import '../models/moviedb/moviedb_response.dart';
 
 class MoviedbDatasourceImpl extends MoviesDatasource {
@@ -34,11 +35,14 @@ class MoviedbDatasourceImpl extends MoviesDatasource {
   @override
   Future<Movie> getMovieById(String id) async {
     final response = await dio.get('/movie/$id');
-    if (response.statusCode != 200)
+    if (response.statusCode != 200) {
       throw Exception('Movie with id $id not found');
+    }
 
-    final detail = MovieDb.fromJson(response.data);
-    final Movie movie = MovieMapper.movieDbToEntity(detail);
+    final movieDetails = MovieDbDetail.fromJson(response.data);
+
+    final Movie movie = MovieMapper.movieDetailToEntity(movieDetails);
+
     return movie;
   }
 

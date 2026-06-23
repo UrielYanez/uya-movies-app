@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uya_movies_app/config/helpers/human_formats.dart';
 import 'package:uya_movies_app/domain/domain.dart';
 import 'package:uya_movies_app/presentation/providers/providers.dart';
+import 'package:uya_movies_app/presentation/widgets/widgets.dart';
 
 class MovieScreen extends ConsumerStatefulWidget {
   static const name = 'movie-screen';
@@ -28,7 +29,7 @@ class _MovieScreenState extends ConsumerState<MovieScreen> {
     final Movie? movie = ref.watch(movieInfoProvider)[widget.movieId];
 
     if (movie == null) {
-      Scaffold(body: Center(child: CircularProgressIndicator(strokeWidth: 2)));
+      return Scaffold(body: Center(child: CircularProgressIndicator(strokeWidth: 2)));
     }
 
     return Scaffold(
@@ -36,7 +37,7 @@ class _MovieScreenState extends ConsumerState<MovieScreen> {
         physics: ClampingScrollPhysics(),
         slivers: [
           //AppBar
-          _CustomSliverAppBar(movie: movie!),
+          _CustomSliverAppBar(movie: movie),
 
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -64,6 +65,7 @@ class _MovieDetails extends StatelessWidget {
         _TitleAndOverview(movie: movie),
 
         // TODO: Géneros de la película
+        MovieGenres(movie: movie)
 
         // TODO: Actores
 
@@ -107,6 +109,8 @@ class _TitleAndOverview extends StatelessWidget {
                       ? movie.overview
                       : 'Sin Información',
                 ),
+                SizedBox(height: 10,),
+                MovieRating(voteAverage: movie.voteAverage,),
                 Row(
                   children: [
                     Text('Estreno: ', style: TextStyle(fontWeight: FontWeight.bold),),
