@@ -22,6 +22,7 @@ class _MovieScreenState extends ConsumerState<MovieScreen> {
   void initState() {
     super.initState();
     ref.read(movieInfoProvider.notifier).loadMovie(widget.movieId);
+    ref.read(actorsByMovieProvider.notifier).loadActors(widget.movieId);
   }
 
   @override
@@ -29,7 +30,9 @@ class _MovieScreenState extends ConsumerState<MovieScreen> {
     final Movie? movie = ref.watch(movieInfoProvider)[widget.movieId];
 
     if (movie == null) {
-      return Scaffold(body: Center(child: CircularProgressIndicator(strokeWidth: 2)));
+      return Scaffold(
+        body: Center(child: CircularProgressIndicator(strokeWidth: 2)),
+      );
     }
 
     return Scaffold(
@@ -61,17 +64,20 @@ class _MovieDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // TODO: Titulo, Overview, Rating
+        // Titulo, Overview, Rating
         _TitleAndOverview(movie: movie),
 
-        // TODO: Géneros de la película
-        MovieGenres(movie: movie)
+        // Géneros de la película
+        MovieGenres(movie: movie),
 
         // TODO: Actores
+        ActorsByMovie(movieId: movie.id.toString()),
 
         // TODO: Trailers
+        //
 
         // TODO: Peliculas Similares
+        //
       ],
     );
   }
@@ -109,15 +115,18 @@ class _TitleAndOverview extends StatelessWidget {
                       ? movie.overview
                       : 'Sin Información',
                 ),
-                SizedBox(height: 10,),
-                MovieRating(voteAverage: movie.voteAverage,),
+                SizedBox(height: 10),
+                MovieRating(voteAverage: movie.voteAverage),
                 Row(
                   children: [
-                    Text('Estreno: ', style: TextStyle(fontWeight: FontWeight.bold),),
-                    SizedBox(width: 5,),
-                    Text(HumanFormats.shortDate(movie.releaseDate))
+                    Text(
+                      'Estreno: ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width: 5),
+                    Text(HumanFormats.shortDate(movie.releaseDate)),
                   ],
-                )
+                ),
               ],
             ),
           ),

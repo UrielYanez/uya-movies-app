@@ -1,10 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:uya_movies_app/config/config.dart';
 import 'package:uya_movies_app/domain/domain.dart';
-
-import '../mappers/movie_mapper.dart';
-import '../models/moviedb/moviedb_detail.dart';
-import '../models/moviedb/moviedb_response.dart';
+import 'package:uya_movies_app/infrastructure/infrastructure.dart';
 
 class MoviedbDatasourceImpl extends MoviesDatasource {
   final dio = Dio(
@@ -44,6 +41,19 @@ class MoviedbDatasourceImpl extends MoviesDatasource {
     final Movie movie = MovieMapper.movieDetailToEntity(movieDetails);
 
     return movie;
+  }
+
+  @override
+  Future<List<Actor>> getActorsByMovie(String movieId) async {
+    final response = await dio.get('/movie/$movieId/credits');
+
+    final credits = MovieDbCredits.fromJson(response.data);
+
+    List<Actor> actors = credits.cast
+        .map((cast) => ActorMapper.castToEntity(cast))
+        .toList();
+
+    return actors;
   }
 
   @override
