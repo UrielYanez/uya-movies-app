@@ -4,3 +4,5 @@ export 'package:uya_movies_app/presentation/widgets/movies/movie_horizontal_list
 export 'package:uya_movies_app/presentation/widgets/movies/movie_rating.dart';
 export 'package:uya_movies_app/presentation/widgets/movies/movies_slideshow.dart';
 export 'package:uya_movies_app/presentation/widgets/shared/custom_appbar.dart';
+export 'package:uya_movies_app/presentation/widgets/movies/videos_from_movie.dart';
+export 'package:uya_movies_app/presentation/providers/movies/videos_from_movie_provider.dart';

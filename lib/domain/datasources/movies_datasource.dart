@@ -17,5 +17,5 @@ abstract class MoviesDatasource {
 
   Future<List<Movie>> getSimilarMovie(String movieId);
 
-  Future<List<dynamic>> getYoutubeVideoById(String movieId);
+  Future<List<Video>> getYoutubeVideoById(String movieId);
 }
